@@ -271,3 +271,9 @@ body {
 .select-css option {
   font-weight: normal;
 }
+
+
+.imgthum {
+  width: 150px;
+  height: 150px;
+}

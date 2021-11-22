@@ -42,6 +42,10 @@ app.get("/register", (req, res) => {
   res.render("register");
 });
 
+app.get('/landing', (req, res) => {
+  res.render("landing")
+})
+
 
 // Registro
 
@@ -124,6 +128,8 @@ app.post("/auth", async (req, res) => {
       } else {
         req.session.loggedin = true
         req.session.name = results[0].nombre
+        req.session.rol = results[0].rol
+        console.log(req.session.rol);
         res.render('login', {
           alert: true,
           alertTitle: "Conexion exitosa",
@@ -152,16 +158,27 @@ app.post("/auth", async (req, res) => {
 
 //auth paginas
 app.get('/', (req, res) => {
-  if (req.session.loggedin) {
-    res.render('index', {
+  if (req.session.loggedin && req.session.rol === "estudiante") {
+    res.render('landing', {
       login: true,
-      name: req.session.name
+      name: req.session.name,
+      rol: req.session.rol
     })
   } else {
-    res.render('index', {
-      login: false,
-      name: "Debe iniciar sesion"
-    })
+    if (req.session.loggedin && req.session.rol === "profesor") {
+      res.render('dashboard', {
+        login: true,
+        name: req.session.name,
+        rol: req.session.rol
+      })
+    } else {
+      res.render('landing', {
+        login: false,
+        name: "Para ingresar debe iniciar sesion"
+      })
+
+    }
+
   }
 })
 
@@ -171,6 +188,9 @@ app.get('/logout', (req, res) => {
     res.redirect('/login')
   })
 })
+
+
+
 app.listen(port, (req, res) => {
   console.log(`Server running in: http://localhost:${port}`);
 });

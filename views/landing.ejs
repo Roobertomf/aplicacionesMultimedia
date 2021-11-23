@@ -29,7 +29,7 @@
     <link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
-<% if (login) { %>
+
 
 <body id="page-top">
     <!-- Navigation-->
@@ -222,6 +222,12 @@
             </div>
         </div>
     </section>
+
+
+
+
+
+
     <!-- About Section-->
     <section class="page-section bg-primary text-white mb-0" id="calificado">
         <div class="container">
@@ -233,17 +239,79 @@
                 <div class="divider-custom-line"></div>
             </div>
             <!-- About Section Content-->
-            <div class="row">
-                <div class="col-lg-4 ms-auto">
-                    <p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download
-                        includes the complete source files including HTML, CSS, and JavaScript as well as optional SASS
-                        stylesheets for easy customization.</p>
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
-                <div class="col-lg-4 me-auto">
-                    <p class="lead">You can create your own custom avatar for the masthead, change the icon in the
-                        dividers, and add your email address to the contact form to make it fully functional!</p>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>id_Alumno</th>
+                                    <th>titulo</th>
+                                    <th>Calificacion</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>id_Alumno</th>
+                                    <th>titulo</th>
+                                    <th>Calificacion</th>
+                                </tr>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <%for (const calificado of completado) { %>
+                                <tr>
+                                    <td><%= calificado.id %> </td>
+
+                                    <%for (const tarea of tareastotal) { %>
+                                    <% if (tarea.id === calificado.tarea_id) { %>
+                                    <td><%= tarea.materia %> </td>
+
+                                    <% } %>
+                                    <% } %>
+
+                                    <%for (const tarea of tareastotal) { %>
+                                    <% if (tarea.id === calificado.tarea_id) { %>
+                                    <td><%= tarea.titulo %> </td>
+
+                                    <% } %>
+                                    <% } %>
+
+                                    <td><%= calificado.calificacion %> </td>
+
+                                </tr>
+
+                                <% } %>
+
+
+
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        </div>
+
+
+
+
+
+
+
         </div>
     </section>
     <!-- Contact Section-->
@@ -289,6 +357,15 @@
         </div>
     </section>
     <!-- Portfolio Modals-->
+
+
+
+
+
+
+
+
+
     <!-- Portfolio Modal 1-->
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1"
         aria-hidden="true">
@@ -311,9 +388,41 @@
                                 <img class="img-fluid rounded mb-5 imgthum"
                                     src="resources/assets/img/portfolio/espanol.jpeg" alt="..." />
                                 <!-- Portfolio Modal - Text-->
-                                <h4>Tarea:</h4>
-                                <p class="mb-4">Aun no hay tarea asignada
-                                </p>
+                                <h3>Tareas:</h3>
+
+                                <ul>
+
+                                    <% for (const tarea of tareas) { %>
+                                    <% if (tarea.materia === "español") { %>
+                                    <li>
+
+                                        <h4>Tarea: <%= tarea.titulo %></h4>
+                                        <p class="mb-4"><%= tarea.descripcion %> </p>
+                                        <% if (tarea.srcname !== null) { %>
+                                        <a class="btn btn-primary" href="/download/<%= tarea.srcname %> ">Descargar
+                                            archivo</a>
+                                        <% } %>
+                                        <br>
+                                        <div class="container">
+                                            <form method="post" action="upload" enctype="multipart/form-data">
+                                                <input type="file" name="file" id="">
+                                                <input type="number" name="idtarea" value=<%= tarea.id %> id="idtarea"
+                                                    hidden>
+                                                <input class="btn btn-success" type="submit" value="Enviar">
+                                            </form>
+
+
+
+
+
+
+                                        </div>
+
+                                    </li>
+                                    <hr>
+                                    <% } %>
+                                    <% } %>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -344,9 +453,33 @@
                                 <img class="img-fluid rounded mb-5 imgthum"
                                     src="resources/assets/img/portfolio/matematicas.jpeg" alt="..." />
                                 <!-- Portfolio Modal - Text-->
-                                <h4>Tarea:</h4>
-                                <p class="mb-4">Aun no hay tarea asignada
-                                </p>
+                                <h3>Tareas:</h3>
+
+                                <ul>
+
+                                    <% for (const tarea of tareas) { %>
+                                    <% if (tarea.materia === "matematicas") { %>
+                                    <li>
+                                        <h4>Tarea: <%= tarea.titulo%></h4>
+                                        <p class="mb-4"><%= tarea.descripcion %> </p>
+                                        <% if (tarea.srcname !== null) { %>
+                                        <a class="btn btn-primary" href="/download/<%= tarea.srcname %> ">Descargar
+                                            archivo</a>
+                                        <% } %>
+                                        <br>
+                                        <div class="container">
+                                            <form method="post" action="upload" enctype="multipart/form-data">
+                                                <input type="file" name="file" id="">
+                                                <input type="number" name="idtarea" value=<%= tarea.id %> id="idtarea"
+                                                    hidden>
+                                                <input class="btn btn-success" type="submit" value="Enviar">
+                                            </form>
+                                        </div>
+                                    </li>
+                                    <hr>
+                                    <% } %>
+                                    <% } %>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -376,9 +509,33 @@
                                 <img class="img-fluid rounded mb-5 imgthum"
                                     src="resources/assets/img/portfolio/arte.jpeg" alt="..." />
                                 <!-- Portfolio Modal - Text-->
-                                <h4>Tarea:</h4>
-                                <p class="mb-4">Aun no hay tarea asignada
-                                </p>
+                                <h3>Tareas:</h3>
+
+                                <ul>
+
+                                    <% for (const tarea of tareas) { %>
+                                    <% if (tarea.materia === "arte") { %>
+                                    <li>
+                                        <h4>Tarea: <%= tarea.titulo%></h4>
+                                        <p class="mb-4"><%= tarea.descripcion %> </p>
+                                        <% if (tarea.srcname !== null) { %>
+                                        <a class="btn btn-primary" href="/download/<%= tarea.srcname %> ">Descargar
+                                            archivo</a>
+                                        <% } %>
+                                        <br>
+                                        <div class="container">
+                                            <form method="post" action="upload" enctype="multipart/form-data">
+                                                <input type="file" name="file" id="">
+                                                <input type="number" name="idtarea" value=<%= tarea.id %> id="idtarea"
+                                                    hidden>
+                                                <input class="btn btn-success" type="submit" value="Enviar">
+                                            </form>
+                                        </div>
+                                    </li>
+                                    <hr>
+                                    <% } %>
+                                    <% } %>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -408,9 +565,33 @@
                                 <img class="img-fluid rounded mb-5 imgthum"
                                     src="resources/assets/img/portfolio/ingles.png" alt="..." />
                                 <!-- Portfolio Modal - Text-->
-                                <h4>Tarea:</h4>
-                                <p class="mb-4">Aun no hay tarea asignada
-                                </p>
+                                <h3>Tareas:</h3>
+
+                                <ul>
+
+                                    <% for (const tarea of tareas) { %>
+                                    <% if (tarea.materia === "ingles") { %>
+                                    <li>
+                                        <h4>Tarea: <%= tarea.titulo%></h4>
+                                        <p class="mb-4"><%= tarea.descripcion %> </p>
+                                        <% if (tarea.srcname !== null) { %>
+                                        <a class="btn btn-primary" href="/download/<%= tarea.srcname %> ">Descargar
+                                            archivo</a>
+                                        <% } %>
+                                        <br>
+                                        <div class="container">
+                                            <form method="post" action="upload" enctype="multipart/form-data">
+                                                <input type="file" name="file" id="">
+                                                <input type="number" name="idtarea" value=<%= tarea.id %> id="idtarea"
+                                                    hidden>
+                                                <input class="btn btn-success" type="submit" value="Enviar">
+                                            </form>
+                                        </div>
+                                    </li>
+                                    <hr>
+                                    <% } %>
+                                    <% } %>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -440,9 +621,33 @@
                                 <img class="img-fluid rounded mb-5 imgthum"
                                     src="resources/assets/img/portfolio/geografia.jpeg" alt="..." />
                                 <!-- Portfolio Modal - Text-->
-                                <h4>Tarea:</h4>
-                                <p class="mb-4">Aun no hay tarea asignada
-                                </p>
+                                <h3>Tareas:</h3>
+
+                                <ul>
+
+                                    <% for (const tarea of tareas) { %>
+                                    <% if (tarea.materia === "geografia") { %>
+                                    <li>
+                                        <h4>Tarea: <%= tarea.titulo%></h4>
+                                        <p class="mb-4"><%= tarea.descripcion %> </p>
+                                        <% if (tarea.srcname !== null) { %>
+                                        <a class="btn btn-primary" href="/download/<%= tarea.srcname %> ">Descargar
+                                            archivo</a>
+                                        <% } %>
+                                        <br>
+                                        <div class="container">
+                                            <form method="post" action="upload" enctype="multipart/form-data">
+                                                <input type="file" name="file" id="">
+                                                <input type="number" name="idtarea" value=<%= tarea.id %> id="idtarea"
+                                                    hidden>
+                                                <input class="btn btn-success" type="submit" value="Enviar">
+                                            </form>
+                                        </div>
+                                    </li>
+                                    <hr>
+                                    <% } %>
+                                    <% } %>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -472,9 +677,32 @@
                                 <img class="img-fluid rounded mb-5 imgthum"
                                     src="resources/assets/img/portfolio/historia.jpeg" alt="..." />
                                 <!-- Portfolio Modal - Text-->
-                                <h4>Tarea:</h4>
-                                <p class="mb-4">Aun no hay tarea asignada
-                                </p>
+                                <h3>Tareas:</h3>
+                                <ul>
+
+                                    <% for (const tarea of tareas) { %>
+                                    <% if (tarea.materia === "historia") { %>
+                                    <li>
+                                        <h4>Tarea: <%= tarea.titulo%></h4>
+                                        <p class="mb-4"><%= tarea.descripcion %> </p>
+                                        <% if (tarea.srcname !== null) { %>
+                                        <a class="btn btn-primary" href="/download/<%= tarea.srcname %> ">Descargar
+                                            archivo</a>
+                                        <% } %>
+                                        <br>
+                                        <div class="container">
+                                            <form method="post" action="upload" enctype="multipart/form-data">
+                                                <input type="file" name="file" id="">
+                                                <input type="number" name="idtarea" value=<%= tarea.id %> id="idtarea"
+                                                    hidden>
+                                                <input class="btn btn-success" type="submit" value="Enviar">
+                                            </form>
+                                        </div>
+                                    </li>
+                                    <hr>
+                                    <% } %>
+                                    <% } %>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -482,6 +710,23 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+    <!-- Portfolio Modal 1-->
+
+
+
+
+
+
+
+
+
+
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
@@ -507,17 +752,22 @@
     <!-- Page level plugins -->
     <script src="resources/vendor/chart.js/Chart.min.js"></script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if (typeof alert != "undefined")  { %>
+    <script>
+        Swal.fire({
+            title: '<%= alertTitle %>',
+            text: '<%= alertMessage %>',
+            icon: '<%= alertIcon %>',
+            showConfirmButton: '<%= showConfirmButton %>',
+            timer: '<%= timer %>'
 
+        }).then(() => {
+            window.location = '<%= ruta %>'
+        })
+    </script>
+    <% } %>
 
 </body>
-
-
-<% } else { %>
-<h1 class="display-2">Página de Inicio</h1>
-<h2><strong><%= name %></strong></h2>
-<a href="login" class="a-login">Ir a Login</a>
-
-
-<% } %>
 
 </html>
